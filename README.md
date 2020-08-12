@@ -1,0 +1,2 @@
+# airflow_test_failure_callback
+on_failure_callback をテストしてみる
