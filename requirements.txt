@@ -1,0 +1,12 @@
+setuptools
+wheel
+pytz
+pyOpenSSL
+ndg-httpsclient
+pyasn1
+pytz
+flask_oauthlib>=0.9
+google-cloud
+google-cloud-storage
+google-auth-httplib2
+google-api-python-client

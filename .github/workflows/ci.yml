@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      # いくつかのビルドパターンを通してみる
+      - run: docker build -t "${PWD##*/}" . # ${PWD##*/} airflow_on_gcp
+      - run: docker build  --build-arg AIRFLOW_DEPS="datadog,dask" -t "${PWD##*/}" .
+      - run: docker build  --build-arg AIRFLOW_DEPS="datadog,dask" --build-arg UPDATE_DEPENDENCIES="TRUE" -t "${PWD##*/}" .
+      - run: docker run "${PWD##*/}" python -V
+      - run: docker run "${PWD##*/}" version
