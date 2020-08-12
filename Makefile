@@ -1,14 +1,3 @@
-GCP_PROJECT_ID=<gcp_project_id>
-PROJECT=${GCP_PROJECT_ID}
-AIRFLOW_IMAGE_TAG=0.1
-GCR_HOST=asia.gcr.io
-GCP_ZONE=us-west1-b
-DEFAULT_SERVICE_ACCOUNT=<default_service_account>
-MACHINE_TYPE=n1-standard-2
-
-
-
-
 build:
 	docker build --rm \
 	 --build-arg AIRFLOW_DEPS="datadog,dask" \
