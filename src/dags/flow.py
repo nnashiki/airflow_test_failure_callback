@@ -1,48 +1,40 @@
-"""
-Code that goes along with the Airflow located at:
-http://airflow.readthedocs.org/en/latest/tutorial.html
-"""
+import airflow
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
-from datetime import datetime, timedelta
+from airflow.operators.python_operator import PythonOperator
+import datetime
 
+
+def all_time_success():
+    print('hello')
+
+def all_time_fail():
+    raise Exception('エラーだ!!')
+
+def dag_on_failure_callback(context):
+    print('ダグが失敗した時')
+
+def task_on_failure_callback(context):
+    print('タスクが失敗した時')
 
 default_args = {
     "owner": "airflow",
-    "depends_on_past": False,
-    "start_date": datetime(2015, 6, 1),
-    "email": ["airflow@airflow.com"],
-    "email_on_failure": False,
-    "email_on_retry": False,
-    "retries": 1,
-    "retry_delay": timedelta(minutes=5),
-    # 'queue': 'bash_queue',
-    # 'pool': 'backfill',
-    # 'priority_weight': 10,
-    # 'end_date': datetime(2016, 1, 1),
+    "start_date": airflow.utils.dates.days_ago(1),
 }
 
-dag = DAG("tutorial", default_args=default_args, schedule_interval=timedelta(1))
+with DAG(
+        dag_id="sample_dag",
+        on_failure_callback=dag_on_failure_callback,
+        default_args=default_args) as dag:
 
-# t1, t2 and t3 are examples of tasks created by instantiating operators
-t1 = BashOperator(task_id="print_date", bash_command="date", dag=dag)
+    success_task = PythonOperator(
+        task_id="success_task",
+        python_callable=all_time_success
+    )
 
-t2 = BashOperator(task_id="sleep", bash_command="sleep 5", retries=3, dag=dag)
+    fail_task = PythonOperator(
+        task_id="fail_task",
+        python_callable=all_time_fail,
+        on_failure_callback=task_on_failure_callback
+    )
 
-templated_command = """
-    {% for i in range(5) %}
-        echo "{{ ds }}"
-        echo "{{ macros.ds_add(ds, 7)}}"
-        echo "{{ params.my_param }}"
-    {% endfor %}
-"""
-
-t3 = BashOperator(
-    task_id="templated",
-    bash_command=templated_command,
-    params={"my_param": "Parameter I passed in"},
-    dag=dag,
-)
-
-t2.set_upstream(t1)
-t3.set_upstream(t1)
+    success_task >> fail_task
