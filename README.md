@@ -61,9 +61,15 @@ Exception: エラーだ!!
 [2020-08-12 12:28:39,599] {{logging_mixin.py:112}} INFO - [2020-08-12 12:28:39,598] {{local_task_job.py:103}} INFO - Task exited with return code 1
 ```
 
+コンテキスト  
+`context['dag']`
+`context['task']`
+`context['execution_date']` etc...
+
+
 参考記事:
-https://medium.com/@momota/airflow-dag%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%90%84%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E6%88%90%E5%8A%9For%E5%A4%B1%E6%95%97%E3%82%92slack%E3%81%AB%E9%80%9A%E7%9F%A5%E3%81%99%E3%82%8B-5eecda9ec378
-https://blog.imind.jp/entry/2019/02/08/170332
-https://note.com/dd_techblog/n/n7c3fc2559ff2
-https://qiita.com/munaita_/items/1a5b131839e01ea7280dhttps://qiita.com/munaita_/items/1a5b131839e01ea7280d
-https://note.com/dd_techblog/n/n7c3fc2559ff2
+https://medium.com/@momota/airflow-dag%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%90%84%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E6%88%90%E5%8A%9For%E5%A4%B1%E6%95%97%E3%82%92slack%E3%81%AB%E9%80%9A%E7%9F%A5%E3%81%99%E3%82%8B-5eecda9ec378  
+https://blog.imind.jp/entry/2019/02/08/170332  
+https://note.com/dd_techblog/n/n7c3fc2559ff2  
+https://qiita.com/munaita_/items/1a5b131839e01ea7280dhttps://qiita.com/munaita_/items/1a5b131839e01ea7280d  
+https://note.com/dd_techblog/n/n7c3fc2559ff2  
